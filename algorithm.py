@@ -6,29 +6,19 @@ wiki_wiki = wikipediaapi.Wikipedia('en')
 
 
 # given a subject, creates a Tree based on the wikipedia page's links
-
-def treePopulator(subject, count, dupChecker):
-    count = count + 1
+def treePopulator(subject, dupChecker):
+    # generates all the links based on the given subject in the form of a list
     allLinks = wiki_wiki.page(subject).links
-    listOfLinks = []
-
-    if count == 6:
-        return Tree(subject, listOfLinks)
-    else:
-        for title in allLinks.keys():
-            if title not in dupChecker:
-                listOfLinks.append(title)
-                dupChecker.add(title)
-            return Tree(subject, listConverter(listOfLinks, count, dupChecker))
-
-
-def listConverter(listOfLinks, count, dupChecker):
-    listOfTrees = []
-    for title in listOfLinks:
+    # creates the initial
+    sixDegreesTree = Tree(subject)
+    for title in allLinks.keys():
         if title not in dupChecker:
+            sixDegreesTree.addChild(Tree(title))
             dupChecker.add(title)
-            listOfTrees.append(treePopulator(title, count, dupChecker))
-            return listOfTrees
+    for child in sixDegreesTree.listOfChildren:
+        if child.getLevel() != None and child.getLevel() <= 6:
+            child.treePopulator(title, dupChecker)
+    return sixDegreesTree
 
 
 # represents the list of visited nodes in the tree.
@@ -44,23 +34,18 @@ parentTracker = {}
 def bfs(visited, queue, startNode, finishNode):
     visited.append(startNode)
     queue.append(startNode)
-    print(startNode.val)
+
     while queue:
         m = queue.pop(0)
 
         if m.val == finishNode:
-            pathFinder(parentTracker, m.val)
+            while m.parent != None:
+                path.append(m.val)
+                m = m.parent
             return list.reverse(path)
 
         for child in m.listOfChildren:
             if child.val not in visited:
-                print(child.val)
                 visited.append(child)
                 queue.append(child)
                 parentTracker[child.val] = m.val
-
-
-def pathFinder(parentTracker, child):
-    while parentTracker[child] != None:
-        path.append(parentTracker[child])
-        child = parentTracker[child]
