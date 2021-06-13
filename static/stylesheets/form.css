@@ -2,6 +2,7 @@ body {
   background-color: #add8e6;
 }
 
-p {
+h2 {
   font-family: "Inter", sans-serif;
+  text-align: center;
 }

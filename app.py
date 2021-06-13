@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 
 @app.route('/', methods=['POST', 'GET'])
-def index():
+def home():
     if request.method == 'GET':
         return render_template('form.html')
     else:
@@ -40,5 +40,5 @@ def connection_page(subjectOne, subjectTwo):
 
 
 @app.route('/about')
-def connection_page():
-    render_template('about.html')
+def about_page():
+    return render_template('about.html')
