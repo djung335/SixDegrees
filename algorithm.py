@@ -1,51 +1,60 @@
 from tree import Tree
 import wikipediaapi
-
+import random
 
 wiki_wiki = wikipediaapi.Wikipedia('en')
 
-
 # given a subject, creates a Tree based on the wikipedia page's links
-def treePopulator(subject, dupChecker):
+
+
+def treePopulator(root):
     # generates all the links based on the given subject in the form of a list
-    allLinks = wiki_wiki.page(subject).links
-    # creates the initial
-    sixDegreesTree = Tree(subject)
-    for title in allLinks.keys():
-        if title not in dupChecker:
-            sixDegreesTree.addChild(Tree(title))
-            dupChecker.add(title)
-    for child in sixDegreesTree.listOfChildren:
-        if child.getLevel() != None and child.getLevel() <= 6:
-            child.treePopulator(title, dupChecker)
-    return sixDegreesTree
+    links = wiki_wiki.page(root.val).links.keys()
+
+    threeLinks = random.sample(links, min(3, len(links)))
+    if root.getLevel() <= 4:
+        addAllChildren(root, threeLinks)
+        for child in root.listOfChildren:
+            treePopulator(child)
 
 
-# represents the list of visited nodes in the tree.
-visited = []
-# a queue for my implementation of breadth-first search.
-queue = []
-# represents the path from one subject to another.
-path = []
-# represents a dictionary to map child nodes to their parents.
-parentTracker = {}
+def addAllChildren(parentTree, links):
+    for title in links:
+        parentTree.addChild(Tree(title))
 
 
-def bfs(visited, queue, startNode, finishNode):
-    visited.append(startNode)
-    queue.append(startNode)
+def shortestPathFinder(root, subject):
+    ret = []
+    connection = []
+    pathFinder(root, subject, ret, connection)
+    index = findIndexOfShortestList(ret)
+    if index == -1:
+        return ["no path!"]
+    else:
+        return ret[index]
 
-    while queue:
-        m = queue.pop(0)
 
-        if m.val == finishNode:
-            while m.parent != None:
-                path.append(m.val)
-                m = m.parent
-            return list.reverse(path)
+def pathFinder(root, subject, ret, connection):
+    if root is None:
+        return
+    connection.append(root.val)
+    if root.val == subject:
+        ret.add(list.copy(connection))
 
-        for child in m.listOfChildren:
-            if child.val not in visited:
-                visited.append(child)
-                queue.append(child)
-                parentTracker[child.val] = m.val
+    for child in root.listOfChildren:
+        pathFinder(child, subject, ret, connection)
+
+    connection.pop()
+
+
+def findIndexOfShortestList(ret):
+    # sizes = []
+    # for list in ret:
+    #     sizes.append(len(list))
+
+    sizes = [len(list) for list in ret]
+    if len(sizes) == 0:
+        return -1
+    else:
+        smallestSize = min(sizes)
+        return sizes.index(smallestSize)

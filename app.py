@@ -30,9 +30,10 @@ def index():
 
 @app.route('/connection/<subjectOne>/<subjectTwo>')
 def connection_page(subjectOne, subjectTwo):
-
-    wikiTree = treePopulator(subjectOne, set())
-    path = bfs([], [], treePopulator(subjectOne, set()), subjectTwo)
-    for step in path:
-        print(step)
+    start = Tree(subjectOne)
+    treePopulator(start)
+    start.printTree()
+    path = shortestPathFinder(start, subjectTwo)
+    for title in path:
+        print(title)
     return "hello"
