@@ -37,3 +37,8 @@ def connection_page(subjectOne, subjectTwo):
     for title in path:
         print(title)
     return "hello"
+
+
+@app.route('/about')
+def connection_page():
+    render_template('about.html')
