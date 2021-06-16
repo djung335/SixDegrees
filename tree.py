@@ -1,5 +1,4 @@
-# A custom data structure to represent the connections that a wikipedia page
-# has to its links
+# This class is a tree data structure.
 class Tree:
     def __init__(self, val):
         self.val = val

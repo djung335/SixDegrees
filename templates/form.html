@@ -8,6 +8,11 @@
   <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='stylesheets/form.css') }}">
   <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200&display=swap" rel="stylesheet">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon_io/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon_io/favicon-16x16.png">
+<link rel="manifest" href="/favicon_io/site.webmanifest">
+
 
     </head>
 
@@ -18,13 +23,14 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
+        <img src="/favicon_io/favicon-32x32.png" width="30" height="30" class="d-inline-block align-top" alt="">
         <div class="collapse navbar-collapse" id="navbarText">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">About</a>
+              <a class="nav-link" href="about">About</a>
             </li>
          
           </ul>
@@ -32,8 +38,9 @@
         </div>
       </nav>
 <h2 class="text-center">Connect Two Subjects Through Wikipedia!</h2>
-
+<div class= "text-center">
 <form method = "POST">
+ 
   <div class="form-group">
     <label for="formGroupExampleInput">Starting Point </label>
     <input name = "Subject One" type="text" class="form-control" id="formGroupExampleInput" placeholder="Subject One (ex. Rex Orange County)">
@@ -42,8 +49,10 @@
     <label for="formGroupExampleInput2">Ending Point </label>
     <input name = "Subject Two" type="text" class="form-control" id="formGroupExampleInput2" placeholder="Subject Two (ex. Tyler, the Creator)">
   </div>
-  <input type="submit" value="Submit">
+
+  <button type="submit" class="btn btn-primary">Go</button>
 </form>
+</div>
 
 
 
